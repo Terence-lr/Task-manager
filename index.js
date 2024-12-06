@@ -1,42 +1,45 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const { v4: uuidv4 } = require('uuid')
 
 const app = express()
 const PORT = 3000
 
-// Middleware to parse form data
-app.use(bodyParser.urlencoded({ extended: true }))
+// Middleware
+app.use(bodyParser.json()) // For JSON requests
+app.use(bodyParser.urlencoded({ extended: true })) // For form submissions
+app.use(express.static('public')) // For serving static files
+app.set('view engine', 'ejs') // Template engine
 
-// ADD THIS LINE HERE:
-app.use(express.static('public')) // This serves static files from the "public" folder
+// Custom Middleware
+app.use((req, res, next) => {
+  console.log(`${req.method} request to ${req.url}`)
+  next()
+})
 
-// Set EJS as the template engine
-app.set('view engine', 'ejs')
-
-// In-memory storage for tasks
-let tasks = []
+app.use((req, res, next) => {
+  if (req.method === 'POST' && !req.body.description) {
+    return res.status(400).send('Description cannot be empty')
+  }
+  next()
+})
 
 // Routes
+const taskRoutes = require('./routes/tasks')
+const userRoutes = require('./routes/users')
+const projectRoutes = require('./routes/projects')
 
-// Home route: Display tasks
-app.get('/', (req, res) => {
-  res.render('index', { tasks }) // Render the "index.ejs" view
-})
+app.use('/tasks', taskRoutes)
+app.use('/users', userRoutes)
+app.use('/projects', projectRoutes)
 
-// Add task route
-app.post('/tasks', (req, res) => {
-  tasks.push(req.body.task) // Add the new task to the array
-  res.redirect('/') // Redirect back to the home page
-})
-
-// Delete task route
-app.post('/tasks/delete', (req, res) => {
-  const index = req.body.index // Get the index of the task to delete
-  tasks.splice(index, 1) // Remove the task from the array
-  res.redirect('/') // Redirect back to the home page
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack)
+  res.status(500).render('error', { message: 'Something went wrong!' })
 })
 
 // Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
+  console.log(`Server running on http://localhost:${PORT}`)
 })

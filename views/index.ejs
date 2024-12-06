@@ -8,28 +8,22 @@
 
 <body>
     <h1>Task Manager</h1>
-
-    <!-- Form to add a new task -->
     <form action="/tasks" method="POST">
-        <input type="text" name="task" placeholder="Enter a new task" required>
+        <input type="text" name="description" placeholder="New Task" required>
         <button type="submit">Add Task</button>
     </form>
 
-    <!-- Display tasks -->
+    <h2>Tasks</h2>
     <ul>
-        <% tasks.forEach((task, index)=> { %>
+        <% tasks.forEach(task=> { %>
             <li>
-                <%= task %>
-                    <form action="/tasks/delete" method="POST" style="display:inline;">
-                        <input type="hidden" name="index" value="<%= index %>">
-                        <button type="submit">Delete</button>
-                    </form>
+                <%= task.description %> - <%= task.status %>
+                        <form action="/tasks/<%= task.id %>?_method=DELETE" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
             </li>
             <% }); %>
     </ul>
 </body>
-<footer>
-    Task Manager App &copy; <%= new Date().getFullYear() %>
-</footer>
 
 </html>

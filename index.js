@@ -1,19 +1,22 @@
-// Import required modules
-const express = require('express') // Framework for creating the server
-const bodyParser = require('body-parser') // Middleware for parsing form data
+const express = require('express')
+const bodyParser = require('body-parser')
 
-// Initialize the Express app
 const app = express()
-const PORT = 3000 // Port number where the server will run
+const PORT = 3000
 
-// Set up middleware
-app.use(bodyParser.urlencoded({ extended: true })) // Parse form data
-app.set('view engine', 'ejs') // Use EJS for rendering HTML
+// Middleware to parse form data
+app.use(bodyParser.urlencoded({ extended: true }))
 
-// Temporary storage for tasks (in-memory)
+// ADD THIS LINE HERE:
+app.use(express.static('public')) // This serves static files from the "public" folder
+
+// Set EJS as the template engine
+app.set('view engine', 'ejs')
+
+// In-memory storage for tasks
 let tasks = []
 
-// Routes (Endpoints)
+// Routes
 
 // Home route: Display tasks
 app.get('/', (req, res) => {

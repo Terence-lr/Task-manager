@@ -8,7 +8,7 @@ const userRoutes = require('./routes/users')
 const projectRoutes = require('./routes/projects')
 
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3001 // Use port 3001 if no environment variable is set
 
 // Middleware
 app.use(bodyParser.json()) // Parse JSON request bodies
@@ -47,11 +47,6 @@ app.use((err, req, res, next) => {
 })
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`)
-})
-
-// Start Server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`)
 })

@@ -6,11 +6,7 @@ let tasks = []
 
 // GET /tasks - Fetch all tasks
 router.get('/', (req, res) => {
-  const statusFilter = req.query.status // Bonus: Query parameter for filtering
-  const filteredTasks = statusFilter
-    ? tasks.filter((task) => task.status === statusFilter)
-    : tasks
-  res.json(filteredTasks)
+  res.json(tasks)
 })
 
 // POST /tasks - Add a new task
@@ -24,15 +20,8 @@ router.post('/', (req, res) => {
   res.status(201).json(newTask)
 })
 
-// GET /tasks/:id - Fetch a task by ID
-router.get('/:id([0-9a-fA-F-]{36})', (req, res) => {
-  const task = tasks.find((task) => task.id === req.params.id)
-  if (!task) return res.status(404).json({ message: 'Task not found' })
-  res.json(task)
-})
-
 // PATCH /tasks/:id - Update a task
-router.patch('/:id([0-9a-fA-F-]{36})', (req, res) => {
+router.patch('/:id', (req, res) => {
   const task = tasks.find((task) => task.id === req.params.id)
   if (!task) return res.status(404).json({ message: 'Task not found' })
 
@@ -43,7 +32,7 @@ router.patch('/:id([0-9a-fA-F-]{36})', (req, res) => {
 })
 
 // DELETE /tasks/:id - Delete a task
-router.delete('/:id([0-9a-fA-F-]{36})', (req, res) => {
+router.delete('/:id', (req, res) => {
   const index = tasks.findIndex((task) => task.id === req.params.id)
   if (index === -1) return res.status(404).json({ message: 'Task not found' })
 

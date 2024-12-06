@@ -2,7 +2,7 @@ const express = require('express')
 const { v4: uuidv4 } = require('uuid')
 const router = express.Router()
 
-let projects = [] // In-memory storage for projects
+let projects = []
 
 // GET /projects - Fetch all projects
 router.get('/', (req, res) => {
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
 
 // PATCH /projects/:id - Update a project
 router.patch('/:id', (req, res) => {
-  const project = projects.find((p) => p.id === req.params.id)
+  const project = projects.find((project) => project.id === req.params.id)
   if (!project) return res.status(404).json({ message: 'Project not found' })
 
   if (req.body.name) project.name = req.body.name
@@ -41,4 +41,4 @@ router.delete('/:id', (req, res) => {
   res.json(deletedProject[0])
 })
 
-module.exports = router // Export the router
+module.exports = router

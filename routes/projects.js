@@ -20,16 +20,9 @@ router.post('/', (req, res) => {
   res.status(201).json(newProject)
 })
 
-// GET /projects/:id - Fetch a project by ID
-router.get('/:id([0-9a-fA-F-]{36})', (req, res) => {
-  const project = projects.find((project) => project.id === req.params.id)
-  if (!project) return res.status(404).json({ message: 'Project not found' })
-  res.json(project)
-})
-
 // PATCH /projects/:id - Update a project
-router.patch('/:id([0-9a-fA-F-]{36})', (req, res) => {
-  const project = projects.find((project) => project.id === req.params.id)
+router.patch('/:id', (req, res) => {
+  const project = projects.find((p) => p.id === req.params.id)
   if (!project) return res.status(404).json({ message: 'Project not found' })
 
   if (req.body.name) project.name = req.body.name
@@ -39,7 +32,7 @@ router.patch('/:id([0-9a-fA-F-]{36})', (req, res) => {
 })
 
 // DELETE /projects/:id - Delete a project
-router.delete('/:id([0-9a-fA-F-]{36})', (req, res) => {
+router.delete('/:id', (req, res) => {
   const index = projects.findIndex((project) => project.id === req.params.id)
   if (index === -1)
     return res.status(404).json({ message: 'Project not found' })
@@ -48,4 +41,4 @@ router.delete('/:id([0-9a-fA-F-]{36})', (req, res) => {
   res.json(deletedProject[0])
 })
 
-module.exports = router
+module.exports = router // Export the router

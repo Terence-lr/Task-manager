@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Task Manager</title>
+</head>
+
+<body>
+    <h1>Task Manager</h1>
+
+    <!-- Form to add a new task -->
+    <form action="/tasks" method="POST">
+        <input type="text" name="task" placeholder="Enter a new task" required>
+        <button type="submit">Add Task</button>
+    </form>
+
+    <!-- Display tasks -->
+    <ul>
+        <% tasks.forEach((task, index)=> { %>
+            <li>
+                <%= task %>
+                    <form action="/tasks/delete" method="POST" style="display:inline;">
+                        <input type="hidden" name="index" value="<%= index %>">
+                        <button type="submit">Delete</button>
+                    </form>
+            </li>
+            <% }); %>
+    </ul>
+</body>
+
+</html>

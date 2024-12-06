@@ -1,0 +1,33 @@
+/*  first I am importing the roboto font from google fonts 
+-this includes three font weights 100(thin), 400(regualr), and 700(bold)
+-the 'display=swap' line ensures the browser swaps to the roboto font as soon as its available */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+
+/* 2nd, below  I apply the 'border-box' sizing model to all elements 
+-This ensures that padding and borders are included within the element's width and height, making layouts easier to manage */
+
+* {
+  box-sizing: border-box;
+}
+/* 3rd, below I am Styling the body element to create a flex container 
+   - 'font-family': Sets the text to use the Roboto font (or sans-serif as fallback)
+   - 'display: flex': Makes the body a flex container, enabling easy alignment of child elements
+   - 'flex-direction: column': Stacks child elements (e.g., headings) vertically
+   - 'align-items: center': Centers child elements horizontally
+   -'justify-content: center': This property centers the child elements vertically along the main axis. It Ensures that content in the body is perfectly centered in both directions within viewport.
+   - 'height: 100vh': Makes the body take up the full height of the viewport (100% of the viewport height)
+   - 'overflow: hidden': Prevents scrollbars from appearing by hiding any overflowing content
+   - 'margin: 0': Removes the default margin that browsers apply to the body
+*/
+
+body {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+}
